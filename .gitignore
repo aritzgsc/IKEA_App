@@ -1,0 +1,8 @@
+# Datasets pesados
+Dataset_IKEA_Definitivo/
+Proceso/QRs/Codigos_QR/
+
+# Archivos de modelo grandes
+*.index
+*.pkl
+*.pt
