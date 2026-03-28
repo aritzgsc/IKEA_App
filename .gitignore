@@ -1,8 +1,18 @@
 # Datasets pesados
 Dataset_IKEA_Definitivo/
 Proceso/QRs/Codigos_QR/
+Proceso/IA/Modelos/
 
 # Archivos de modelo grandes
 *.index
 *.pkl
 *.pt
+
+# Python
+
+__pycache__/
+
+# Otros
+
+*.zip
+*.txt

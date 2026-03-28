@@ -1447,10 +1447,10 @@ body {
         <div class="map-section" style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:2%;top:53%;width:23%;height:21%;">Cocina</div>
         <div class="map-section" style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:2%;top:76%;width:23%;height:19%;">Oficina</div>
         
-        <div class="map-section" style="background:rgba(255,204,0,0.2);border:1.5px solid rgba(255,204,0,0.6);color:#8a6d00;left:26%;top:2%;width:23%;height:29%;">Almacenaje</div>
-        <div class="map-section" style="background:rgba(255,204,0,0.2);border:1.5px solid rgba(255,204,0,0.6);color:#8a6d00;left:26%;top:33%;width:23%;height:21%;">Iluminación</div>
-        <div class="map-section" style="background:rgba(255,204,0,0.2);border:1.5px solid rgba(255,204,0,0.6);color:#8a6d00;left:26%;top:56%;width:23%;height:21%;">Textiles</div>
-        <div class="map-section" style="background:rgba(255,204,0,0.2);border:1.5px solid rgba(255,204,0,0.6);color:#8a6d00;left:26%;top:79%;width:23%;height:16%;">Baño</div>
+        <div class="map-section" style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:26%;top:2%;width:23%;height:29%;">Almacenaje</div>
+        <div class="map-section" style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:26%;top:33%;width:23%;height:21%;">Iluminación</div>
+        <div class="map-section" style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:26%;top:56%;width:23%;height:21%;">Textiles</div>
+        <div class="map-section" style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:26%;top:79%;width:23%;height:16%;">Baño</div>
 
         <div class="corridor" style="background:rgba(150,160,170,0.15);border:1px dashed rgba(150,160,170,0.4);color:#666;left:50%;top:2%;width:11%;height:93%;">A</div>
         <div class="corridor" style="background:rgba(150,160,170,0.15);border:1px dashed rgba(150,160,170,0.4);color:#666;left:62%;top:2%;width:11%;height:93%;">B</div>
@@ -1464,7 +1464,7 @@ body {
       
       <div class="map-legend">
         <div class="legend-item"><div class="legend-dot" style="background:var(--blue);"></div>Exposición</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#ffcc00;border:1px solid #d4a900;"></div>Autoservicio</div>
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(150,160,170,0.15);border:1px dashed rgba(150,160,170,0.4);"></div>Autoservicio</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--blue);border-radius:50%;"></div>Tu ruta</div>
       </div>
     </div>
@@ -1794,7 +1794,7 @@ body {
     <div class="perfil-stats">
       <div class="perfil-stat-card"><span class="perfil-stat-emoji">🏬</span><div class="perfil-stat-val">0</div><div class="perfil-stat-lbl">VISITAS</div></div>
       <div class="perfil-stat-card"><span class="perfil-stat-emoji">⭐</span><div class="perfil-stat-val" id="perfil-points">0</div><div class="perfil-stat-lbl">PUNTOS</div></div>
-      <div class="perfil-stat-card"><span class="perfil-stat-emoji">💚</span><div class="perfil-stat-val">0 €</div><div class="perfil-stat-lbl">AHORRADO</div></div>
+      <div class="perfil-stat-card"><span class="perfil-stat-emoji">💳</span><div class="perfil-stat-val">0 €</div><div class="perfil-stat-lbl">AHORRADO</div></div>
     </div>
     <div class="family-card">
       <div class="family-logo-row">
@@ -1823,20 +1823,13 @@ body {
       </div>
     </div>
     <div class="perfil-section">
-      <div class="perfil-section-title">PREFERENCIAS</div>
-      <div class="perfil-card">
-        <div class="perfil-field" onclick="showToast('🏪 Cambiar tienda favorita')"><div class="perfil-field-icon">🏪</div><div class="perfil-field-info"><div class="perfil-field-label">TIENDA FAVORITA</div><div class="perfil-field-val">IKEA Bilbao</div></div><span style="color:var(--gray);">›</span></div>
-        <div class="perfil-field" onclick="showToast('💳 Cambiar método predeterminado')"><div class="perfil-field-icon">💳</div><div class="perfil-field-info"><div class="perfil-field-label">PAGO PREDETERMINADO</div><div class="perfil-field-val">Visa •••• 4242</div></div><span style="color:var(--gray);">›</span></div>
-      </div>
-    </div>
-    <div class="perfil-section">
       <div class="perfil-section-title">ACTIVIDAD</div>
-      <div class="perfil-card">
+      <div class="perfil-card" id="activity-card">
         <div class="perfil-field" onclick="goTo('historial')"><div class="perfil-field-icon">🧾</div><div class="perfil-field-info"><div class="perfil-field-label">HISTORIAL</div><div class="perfil-field-val">Ver mis compras anteriores</div></div><span style="color:var(--gray);">›</span></div>
-        <div class="perfil-field" onclick="navTo('favoritos')"><div class="perfil-field-icon">⭐</div><div class="perfil-field-info"><div class="perfil-field-label">FAVORITOS</div><div class="perfil-field-val">4 artículos guardados</div></div><span style="color:var(--gray);">›</span></div>
+        <div class="perfil-field" onclick="navTo('favoritos')"><div class="perfil-field-icon">⭐</div><div class="perfil-field-info"><div class="perfil-field-label">FAVORITOS</div><div class="perfil-field-val">Sin artículos guardados</div></div><span style="color:var(--gray);">›</span></div>
       </div>
     </div>
-    <button class="pay-btn danger" onclick="onclick="goTo('login')">🗑️ Eliminar cuenta</button>
+    <button class="pay-btn danger" onclick="goTo('login')">🗑️ Eliminar cuenta</button>
     <div style="height:14px;"></div>
   </div>
   <!-- Edit Sheet overlay -->
@@ -3055,14 +3048,11 @@ function renderProfile() {
     const statsHtml = [
       `<div class="perfil-stat-card"><span class="perfil-stat-emoji">🏬</span><div class="perfil-stat-val">${totalVisits}</div><div class="perfil-stat-lbl">VISITAS</div></div>`,
       `<div class="perfil-stat-card"><span class="perfil-stat-emoji">⭐</span><div class="perfil-stat-val" id="perfil-points">${totalPoints.toLocaleString('es-ES')}</div><div class="perfil-stat-lbl">PUNTOS</div></div>`,
-      `<div class="perfil-stat-card"><span class="perfil-stat-emoji">💚</span><div class="perfil-stat-val">${formatPrice(totalSpent)}</div><div class="perfil-stat-lbl">AHORRADO</div></div>`
+      `<div class="perfil-stat-card"><span class="perfil-stat-emoji">💳</span><div class="perfil-stat-val">${formatPrice(totalSpent) === "Consultar" ? "0,00 €" : formatPrice(totalSpent)}</div><div class="perfil-stat-lbl">GASTADO</div></div>`
     ];
 
-    if (orderHistory.length > 0) {
-      statsHtml.push(`<div class="perfil-stat-card"><span class="perfil-stat-emoji">💳</span><div class="perfil-stat-val">${formatPrice(totalSpent)}</div><div class="perfil-stat-lbl">GASTADO</div></div>`);
-    }
-
     perfilStats.innerHTML = statsHtml.join('');
+    
   }
 
   const familyPoints = document.getElementById('family-points-display');
@@ -3070,11 +3060,12 @@ function renderProfile() {
     familyPoints.textContent = totalPoints.toLocaleString('es-ES');
   }
 
-  const activityCard = document.querySelector('#screen-perfil .perfil-section:last-of-type .perfil-card');
+  const activityCard = document.getElementById('activity-card');
+  
   if (activityCard) {
     activityCard.innerHTML = `
-      <div class="perfil-field" onclick="goTo('historial')"><div class="perfil-field-icon">🧾</div><div class="perfil-field-info"><div class="perfil-field-label">HISTORIAL</div><div class="perfil-field-val">${orderHistory.length > 0 ? `Ver ${orderHistory.length} compra${orderHistory.length !== 1 ? 's' : ''} realizada${orderHistory.length !== 1 ? 's' : ''}` : 'Sin compras en esta sesión'}</div></div><span style="color:var(--gray);">›</span></div>
-      <div class="perfil-field" onclick="navTo('favoritos')"><div class="perfil-field-icon">⭐</div><div class="perfil-field-info"><div class="perfil-field-label">FAVORITOS</div><div class="perfil-field-val">${favItems.length} artículo${favItems.length !== 1 ? 's' : ''} guardado${favItems.length !== 1 ? 's' : ''}</div></div><span style="color:var(--gray);">›</span></div>
+      <div class="perfil-field" onclick="goTo('historial')"><div class="perfil-field-icon">🧾</div><div class="perfil-field-info"><div class="perfil-field-label">HISTORIAL</div><div class="perfil-field-val">${orderHistory.length > 0 ? `Ver ${orderHistory.length} compra${orderHistory.length !== 1 ? 's' : ''} realizada${orderHistory.length !== 1 ? 's' : ''}` : 'Sin compras'}</div></div><span style="color:var(--gray);">›</span></div>
+      <div class="perfil-field" onclick="navTo('favoritos')"><div class="perfil-field-icon">⭐</div><div class="perfil-field-info"><div class="perfil-field-label">FAVORITOS</div><div class="perfil-field-val">${favItems.length > 0 ? favItems.length : 'Sin'} artículo${favItems.length !== 1 ? 's' : ''} guardado${favItems.length !== 1 ? 's' : ''}</div></div><span style="color:var(--gray);">›</span></div>
     `;
   }
 }
@@ -3084,7 +3075,7 @@ const editConfigs = {
   name:  { title:'Editar nombre',         field:'name',  label:'NOMBRE',               type:'text',  placeholder:'Tu nombre completo' },
   email: { title:'Editar correo',         field:'email', label:'CORREO ELECTRÓNICO',   type:'email', placeholder:'ejemplo@correo.com' },
   phone: { title:'Editar teléfono',       field:'phone', label:'TELÉFONO',             type:'tel',   placeholder:'+34 600 000 000' },
-  bday:  { title:'Fecha de nacimiento',   field:'bday',  label:'FECHA (DD / MM / AAAA)',type:'text',  placeholder:'15 / 03 / 1990' },
+  bday:  { title:'Fecha de nacimiento',   field:'bday',  label:'FECHA (DD / MM / AAAA)',type:'text', placeholder:'15 / 03 / 1990' }
 };
 
 function openEditSheet(field) {
