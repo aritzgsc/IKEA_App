@@ -3312,44 +3312,78 @@ function handleQRDetected(data) {
     statusEl.className = 'cam-status found';
   }
 
-  const qrDetectedEl = document.getElementById('qr-detected');
-  if (qrDetectedEl) {
-    qrDetectedEl.style.display = 'block';
-    qrDetectedEl.style.animation = 'fadeInUp 0.36s ease-out';
-  }
-
   const cleanData = data.trim();
 
-  // Búsqueda directa por URL — el QR de IKEA lleva exactamente la URL del producto
   const product = Object.values(IKEA_DB).find(p => p.url === cleanData)
                ?? Object.values(IKEA_DB).find(p => p.url?.includes(cleanData))
                ?? Object.values(IKEA_DB).find(p => cleanData.includes(p.url))
-               ?? findProduct(cleanData); // Fallback por nombre/key por si acaso
+               ?? findProduct(cleanData);
 
-  const qrProductNameEl   = document.getElementById('qr-product-name');
-  const qrProductDetailEl = document.getElementById('qr-product-detail');
+  const qrDetectedEl = document.getElementById('qr-detected');
+  if (!qrDetectedEl) return;
 
   if (product) {
-    if (qrProductNameEl) {
-      qrProductNameEl.textContent = [product.nombre, product.subtitulo]
-        .filter(Boolean).join(' – ');
-    }
-    if (qrProductDetailEl) {
-      qrProductDetailEl.textContent = [
-        product.location,
-        product.priceStr || formatPrice(product.price),
-        product.peso || '-'
-      ].filter(s => s && s !== '-').join(' · ');
-    }
+    const displayName = product.nombre || product.key || 'Producto';
+    const priceStr    = product.priceStr || formatPrice(product.price);
+    const locationStr = product.location || 'Consultar';
+    const emojiStr    = product.emoji || '📦';
+    const descStr     = product.subtitulo || product.desc || '';
+    const imageStr    = product.image || '';
+    const isFav       = favItems.some(f => f.key === product.key);
+
+    qrDetectedEl.innerHTML = `
+      <div class="qr-result">
+        ${imageStr
+          ? `<img src="${imageStr}" alt="${displayName}"
+               style="width:54px;height:54px;object-fit:contain;border-radius:10px;flex-shrink:0;"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+             <div class="product-img" style="display:none;border:2px solid var(--green);">${emojiStr}</div>`
+          : `<div class="product-img" style="border:2px solid var(--green);">${emojiStr}</div>`
+        }
+        <div style="flex:1;min-width:0;cursor:pointer;" onclick="openProduct('${product.key}')">
+          <div class="qr-result-name">${displayName}</div>
+          <div class="qr-result-detail">${descStr}</div>
+          <span class="product-location">📍 ${locationStr}</span>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div class="product-price" style="color:var(--green);">${priceStr}</div>
+          <button class="btn btn-primary"
+                  style="margin-top:5px;padding:5px 9px;font-size:10.5px;"
+                  onclick="addToCart('${product.key}',${product.price || 0},'${locationStr}','${emojiStr}','${imageStr}');showToast('✅ ${displayName} añadido')">
+            + Cesta
+          </button>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;padding:0 14px 12px;">
+        <button class="btn btn-fav" id="qr-fav-btn" onclick="qrToggleFav()">${isFav ? '⭐' : '☆'}</button>
+        <button class="btn btn-outline" style="flex:1;" onclick="qrViewProduct()">Ver producto →</button>
+        <button class="btn btn-outline" onclick="resetQRScanner()">🔄</button>
+      </div>
+    `;
 
     window._qrProduct = product;
-    showToast(`✅ ${product.nombre}`);
+    qrDetectedEl.style.display = 'block';
+    qrDetectedEl.style.animation = 'fadeInUp 0.36s ease-out';
+    showToast(`✅ ${displayName}`);
 
   } else {
-    if (qrProductNameEl)   qrProductNameEl.textContent   = `Código: ${cleanData}`;
-    if (qrProductDetailEl) qrProductDetailEl.textContent = 'Producto no encontrado';
+    // No encontrado — tarjeta de aviso igual que AR
+    qrDetectedEl.innerHTML = `
+      <div class="qr-result" style="background:rgba(255,165,0,0.08);border-color:rgba(255,165,0,0.3);">
+        <div class="product-img" style="border:2px solid var(--orange);">❓</div>
+        <div style="flex:1;">
+          <div class="qr-result-name" style="color:var(--orange);">Código: ${cleanData}</div>
+          <div class="qr-result-detail">Producto no encontrado en el catálogo</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;padding:0 14px 12px;">
+        <button class="btn btn-outline" style="flex:1;" onclick="resetQRScanner()">🔄 Escanear de nuevo</button>
+      </div>
+    `;
 
     window._qrProduct = null;
+    qrDetectedEl.style.display = 'block';
+    qrDetectedEl.style.animation = 'fadeInUp 0.36s ease-out';
     showToast('⚠️ Producto no encontrado en el catálogo');
   }
 }
