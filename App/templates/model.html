@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>IKEA Scanner</title>
+        <link rel="stylesheet" href="../static/model.css">
+    </head>
+    <body>
+
+        <header>
+            <div class="logo">IKEA</div>
+            <h1>Escáner de productos</h1>
+        </header>
+
+        <main>
+
+            <!-- ── Selector de modo ── -->
+            <div class="mode-tabs">
+                <button class="mode-tab active" id="tab-file" onclick="switchMode('file')">📁 Subir foto</button>
+                <button class="mode-tab" id="tab-cam" onclick="switchMode('camera')">📷 Usar cámara</button>
+            </div>
+
+            <!-- ════════════════ MODO ARCHIVO ════════════════ -->
+            <div id="file-section">
+                <label class="upload-area" id="drop-area">
+                    <input type="file" id="file-input" accept="image/*" />
+                    <div class="icon">🖼️</div>
+                    <p><strong>Haz clic o arrastra una foto</strong><br />de un mueble IKEA</p>
+                </label>
+
+                <div id="preview-wrap">
+                    <img id="preview" src alt="preview" />
+                </div>
+
+                <button id="scan-btn" onclick="scanFile()">🔍 Identificar producto</button>
+            </div>
+
+            <!-- ════════════════ MODO CÁMARA ════════════════ -->
+            <div id="camera-section">
+
+                <div id="camera-wrap">
+                    <video id="camera-video" autoplay playsinline muted></video>
+                    <div id="camera-guide"><div class="frame"></div></div>
+                </div>
+
+                <p id="cam-hint">Centra el mueble dentro del recuadro y pulsa <strong>Capturar</strong></p>
+
+                <div id="cam-controls">
+                    <button id="capture-btn" onclick="captureFrame()">📸 Capturar y analizar</button>
+                    <button id="flip-btn" onclick="flipCamera()" title="Cambiar cámara">🔄</button>
+                </div>
+
+                <!-- Previsualización del fotograma capturado -->
+                <div id="snap-preview-wrap">
+                    <img id="snap-preview" src alt="Captura" />
+                </div>
+
+                <!-- Canvas oculto para captura -->
+                <canvas id="snap"></canvas>
+            </div>
+
+            <!-- ════════════════ COMPARTIDOS ════════════════ -->
+            <div class="loader" id="loader">
+                <div class="spinner"></div>
+                Analizando imagen…
+            </div>
+
+            <div id="result"></div>
+
+        </main>
+        <script src="../static/model.js"></script>
+    </body>
+</html>

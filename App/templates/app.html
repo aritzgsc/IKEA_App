@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <title>IKEA App</title>
+        <link rel="stylesheet" href="../static/app.css">
+        <script
+            src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    </head>
+    <body>
+        <div class="phone">
+            <div class="screens" id="screens">
+                <!-- ═══════════════════════════════════════ LOGIN ═══ -->
+                <div class="screen active" id="screen-login">
+                    <div class="login-screen">
+                        <div class="login-hero">
+                            <div class="login-logo">IKEA</div>
+                            <div class="login-tagline">IKEA Bilbao · Planta
+                                1</div>
+                        </div>
+                        <div class="login-body">
+                            <div class="login-heading">¡Hola de nuevo! 👋</div>
+                            <div class="login-sub">Inicia sesión para acceder a
+                                tu lista, ver tus favoritos y pagar más
+                                rápido.</div>
+                            <div class="form-group">
+                                <label class="form-label">CORREO
+                                    ELECTRÓNICO</label>
+                                <input class="form-input" id="login-email"
+                                    type="email"
+                                    placeholder="ejemplo@correo.com"
+                                    value="usuario@ikea.es">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CONTRASEÑA</label>
+                                <input class="form-input" id="login-pass"
+                                    type="password" placeholder="••••••••••"
+                                    value="••••••••">
+                            </div>
+                            <div class="login-forgot"
+                                onclick="showToast('📧 Revisa tu correo para recuperar contraseña')">¿Has olvidado tu contraseña?</div>
+                            <div class="login-actions">
+                                <button class="pay-btn ripple-btn"
+                                    onclick="doLogin()">Iniciar sesión</button>
+                                <button class="pay-btn secondary ripple-btn"
+                                    onclick="goTo('registro')">Crear cuenta de IKEA</button>
+                            </div>
+                            <div class="login-switch">¿Todavía no tienes cuenta?
+                                <span
+                                    onclick="goTo('registro')">Regístrate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ REGISTRO ═══ -->
+                <div class="screen" id="screen-registro">
+                    <div class="login-screen">
+                        <div class="login-hero">
+                            <div class="login-logo">IKEA</div>
+                            <div class="login-tagline">IKEA Family</div>
+                        </div>
+                        <div class="login-body">
+                            <div class="login-heading">Únete a IKEA Family
+                                💛</div>
+                            <div class="login-sub">Crea tu cuenta gratis y
+                                disfruta de descuentos exclusivos, café gratis y
+                                mucho más.</div>
+                            <div class="form-group">
+                                <label class="form-label">NOMBRE</label>
+                                <input class="form-input" id="reg-name"
+                                    type="text"
+                                    placeholder="Tu nombre completo">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CORREO
+                                    ELECTRÓNICO</label>
+                                <input class="form-input" id="reg-email"
+                                    type="email"
+                                    placeholder="ejemplo@correo.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CONTRASEÑA</label>
+                                <input class="form-input" id="reg-pass"
+                                    type="password"
+                                    placeholder="Mínimo 8 caracteres">
+                            </div>
+                            <div class="login-actions">
+                                <button class="pay-btn ripple-btn"
+                                    onclick="doRegister()">Crear cuenta</button>
+                                <button class="pay-btn secondary ripple-btn"
+                                    onclick="goTo('login')">Ya tengo una
+                                    cuenta</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ INICIO ═══ -->
+                <div class="screen" id="screen-inicio">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <div class="logo" onclick="navTo('inicio')"
+                            style="cursor: pointer;">IKEA</div>
+                        <span class="header-title">Inicio</span>
+                        <div class="header-icons">
+                            <div class="cart-icon-wrap" onclick="goTo('cesta')">
+                                <div class="header-icon">🛒</div>
+                                <div class="cart-badge" id="cart-badge">0</div>
+                            </div>
+                            <button class="header-icon"
+                                onclick="goTo('config')">⚙️</button>
+                            <button class="header-icon"
+                                onclick="goTo('perfil')">👤</button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="hero-banner">
+                            <div class="hero-location">IKEA BILBAO · PLANTA
+                                1</div>
+                            <div class="hero-title">Compra sin carrito,<br>solo
+                                con tu móvil 📱</div>
+                            <div class="hero-chips">
+                                <span class="hero-chip">📷 Escaneo</span>
+                                <span class="hero-chip">🔮 AR</span>
+                                <span class="hero-chip">🗺️ Mapa</span>
+                                <span class="hero-chip">🎙️ Voz</span>
+                            </div>
+                        </div>
+                        <div class="action-grid">
+                            <button class="action-card fade-in-up s1 ripple-btn"
+                                onclick="goTo('buscar')">
+                                <span class="action-emoji">🔍</span>
+                                <span class="action-name">Búsqueda</span>
+                                <span class="action-desc">Manual · Por
+                                    voz</span>
+                            </button>
+                            <button class="action-card fade-in-up s2 ripple-btn"
+                                onclick="goTo('escaner')">
+                                <span class="action-emoji">📷</span>
+                                <span class="action-name"
+                                    style="color:var(--blue)">Escanear</span>
+                                <span class="action-desc">QR · Código de
+                                    barras</span>
+                            </button>
+                            <button class="action-card fade-in-up s3 ripple-btn"
+                                onclick="goTo('ar')">
+                                <span class="action-emoji">🔮</span>
+                                <span class="action-name"
+                                    style="color:var(--purple)">Vista AR</span>
+                                <span class="action-desc">Reconocer
+                                    muebles</span>
+                            </button>
+                            <button class="action-card fade-in-up s4 ripple-btn"
+                                onclick="goTo('mapa')">
+                                <span class="action-emoji">🗺️</span>
+                                <span class="action-name"
+                                    style="color:var(--green)">Mapa</span>
+                                <span class="action-desc">Ruta óptima por
+                                    pasillos</span>
+                            </button>
+                        </div>
+                        <div id="panel-gestos">
+                            <div class="gestures-card"
+                                onclick="requestSensorPermissions()"
+                                style="margin: 15px; padding: 10px; background: rgba(255,219,0,0.1); border-left: 4px solid var(--yellow, #FFDB00); border-radius: 8px; cursor: pointer; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.05); min-height: 135px; display: flex; flex-direction: column; justify-content: center;">
+                                <div
+                                    style="font-size: 16px; margin-bottom: 20px; color: #111;">📳
+                                    <strong>Activar Gestos
+                                        Inteligentes</strong></div>
+                                <div style="font-size: 13px; color: #444;">Toca
+                                    aquí para habilitar los sensores. Agita el
+                                    móvil para borrar o inclínalo para
+                                    favoritos.</div>
+                            </div>
+                        </div>
+                        <div class="section-title"
+                            style="margin-top:16px;">PRODUCTOS POPULARES</div>
+                        <div class="related-scroll" id="home-products"
+                            style="padding:0 14px;">
+                            <div
+                                style="text-align:center;padding:30px;color:var(--gray);">Cargando
+                                productos...</div>
+                        </div>
+                        <div style="height:14px;"></div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item active"
+                            onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('shopping')"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ BUSCAR ═══ -->
+                <div class="screen" id="screen-buscar">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <button class="header-icon"
+                            onclick="goBack()">←</button>
+                        <span class="header-title">Búsqueda</span>
+                        <div class="header-icons">
+                            <div class="cart-icon-wrap"
+                                onclick="goTo('cesta')"><div
+                                    class="header-icon">🛒</div><div
+                                    class="cart-badge"
+                                    id="cart-badge-buscar">5</div></div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div style="padding:11px 14px;">
+                            <div
+                                style="background:var(--card);border-radius:13px;padding:11px 14px;display:flex;align-items:center;gap:9px;box-shadow:0 2px 6px rgba(0,0,0,0.07);border:2px solid var(--blue);">
+                                <span style="font-size:19px;">🔍</span>
+                                <input
+                                    style="flex:1;border:none;background:none;font-size:13.5px;font-family:'Noto Sans',sans-serif;outline:none;"
+                                    placeholder="Buscar en catálogo IKEA..."
+                                    oninput="filterProducts(this.value)"
+                                    id="search-input">
+                                <button
+                                    style="background:var(--bg);border:none;padding:5px 10px;border-radius:7px;font-size:19px;cursor:pointer;"
+                                    onclick="startVoiceSearch()">🎙️</button>
+                            </div>
+                        </div>
+                        <div class="section-title">RESULTADOS</div>
+                        <div id="search-results"></div>
+                        <div style="height:14px;"></div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item" onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item active"
+                            onclick="navTo('shopping')"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ ESCÁNER QR ═══ -->
+                <div class="screen" id="screen-escaner">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <button class="header-icon"
+                            onclick="goBack()">←</button>
+                        <span class="header-title">Escaneo QR</span>
+                        <div class="header-icons">
+                            <div class="cart-icon-wrap"
+                                onclick="goTo('cesta')"><div
+                                    class="header-icon">🛒</div><div
+                                    class="cart-badge">5</div></div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <!-- Cámara real para QR -->
+                        <div class="camera-wrap" id="qr-camera-wrap"
+                            onclick="expandCamera('qr', event)"> <video
+                                id="qr-video" autoplay playsinline
+                                muted></video>
+                            <canvas id="qr-canvas" class="cam-canvas"></canvas>
+                            <div class="qr-overlay">
+                                <div class="qr-frame">
+                                    <div class="qr-corner tl"></div>
+                                    <div class="qr-corner tr"></div>
+                                    <div class="qr-corner bl"></div>
+                                    <div class="qr-corner br"></div>
+                                    <div class="qr-scan-line"></div>
+                                </div>
+                                <p class="qr-hint">Centra el código QR en el
+                                    recuadro</p>
+                            </div>
+                            <div class="cam-status" id="qr-status">📷 Buscando
+                                código QR...</div>
+                            <button class="flash-btn" id="qr-flash-btn"
+                                onclick="toggleQRFlash()">💡</button>
+                            <div class="cam-no-access" id="qr-no-cam"
+                                style="display:none;">
+                                <div class="icon">📷</div>
+                                <div>Cámara no disponible</div>
+                                <div
+                                    style="font-size:10.5px;color:rgba(255,255,255,0.4);margin-top:3px;">Acepta
+                                    el permiso y recarga la página</div>
+                            </div>
+                        </div>
+                        <div id="qr-detected" style="display:none;">
+                            <div class="qr-result">
+                                <span class="qr-result-icon">✅</span>
+                                <div>
+                                    <div class="qr-result-name"
+                                        id="qr-product-name">-</div>
+                                    <div class="qr-result-detail"
+                                        id="qr-product-detail">-</div>
+                                </div>
+                            </div>
+                            <div
+                                style="display:flex;gap:8px;padding:0 14px 12px;">
+                                <button class="btn btn-primary" style="flex:2;"
+                                    id="qr-add-btn" onclick="qrAddToCart()">+
+                                    Añadir a cesta</button>
+                                <button class="btn btn-fav" id="qr-fav-btn"
+                                    onclick="qrToggleFav()">☆</button>
+                                <button class="btn btn-outline"
+                                    onclick="qrViewProduct()">Ver</button>
+                            </div>
+                        </div>
+                        <div
+                            style="padding:14px;display:flex;flex-direction:column;gap:9px;">
+                            <div
+                                style="display:flex;align-items:center;gap:9px;">
+                                <div
+                                    style="flex:1;height:1px;background:var(--border);"></div>
+                                <span
+                                    style="font-size:10.5px;font-weight:700;color:var(--gray);">O
+                                    BUSCA MANUALMENTE</span>
+                                <div
+                                    style="flex:1;height:1px;background:var(--border);"></div>
+                            </div>
+                            <div style="padding:10px 14px;"><div
+                                    style="background:var(--card);border-radius:13px;padding:11px 14px;display:flex;align-items:center;gap:9px;box-shadow:0 2px 6px rgba(0,0,0,0.07);"><span>🔍</span><input
+                                        style="flex:1;border:none;background:none;font-size:13.5px;font-family:'Noto Sans',sans-serif;outline:none;"
+                                        placeholder="Buscar en catálogo..."
+                                        onclick="openSearchAndFocus()"><span
+                                        style="cursor:pointer;"
+                                        onclick="startVoiceSearch()">🎙️</span></div></div>
+                        </div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item active"
+                            onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('shopping')"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ VISTA AR ═══ -->
+                <div class="screen" id="screen-ar">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <button class="header-icon"
+                            onclick="goBack()">←</button>
+                        <span class="header-title">Vista AR · IA</span>
+                        <div class="header-icons">
+                            <div class="cart-icon-wrap"
+                                onclick="goTo('cesta')"><div
+                                    class="header-icon">🛒</div><div
+                                    class="cart-badge">5</div></div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="camera-wrap" id="ar-camera-wrap"
+                            onclick="expandCamera('ar', event)"> <video
+                                id="ar-video" autoplay playsinline
+                                muted></video>
+                            <canvas id="ar-canvas" class="cam-canvas"></canvas>
+                            <div class="ar-vf-overlay">
+                                <div class="ar-vf-frame">
+                                    <div class="vc tl"></div><div
+                                        class="vc tr"></div>
+                                    <div class="vc bl"></div><div
+                                        class="vc br"></div>
+                                </div>
+                            </div>
+                            <div class="cam-status" id="ar-status">📷 Centra el
+                                mueble</div>
+                            <img id="ar-snap-preview" src alt>
+                            <div class="ar-loader" id="ar-loader"><div
+                                    class="ar-spinner"></div>Identificando con
+                                IA…</div>
+                            <div class="cam-no-access" id="ar-no-cam"
+                                style="display:none;">
+                                <div class="icon">📷</div>
+                                <div>Cámara no disponible</div>
+                                <div
+                                    style="font-size:10.5px;color:rgba(255,255,255,0.4);margin-top:3px;">Acepta
+                                    el permiso y recarga</div>
+                            </div>
+                            <div class="ar-controls-bar">
+                                <button id="ar-capture-btn" class="ripple-btn"
+                                    onclick="arCapture()">🔍 Identificar
+                                    mueble</button>
+                                <button id="ar-flip-btn"
+                                    onclick="arFlipCamera()">🔄</button>
+                            </div>
+                        </div>
+                        <div style="padding:11px 14px 0;">
+                            <p class="section-title"
+                                style="padding:0 0 7px;">DETECTADO POR IA</p>
+                            <div
+                                style="background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+                                <div id="ar-detected-list">
+                                    <div
+                                        style="padding:22px 14px;text-align:center;color:var(--gray);">
+                                        <div
+                                            style="font-size:38px;margin-bottom:7px;">🔮</div>
+                                        <div
+                                            style="font-size:12.5px;font-weight:700;">Apunta
+                                            a un mueble<br>y pulsa
+                                            <strong>Identificar</strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding:10px 14px 0;">
+                            <p class="section-title"
+                                style="padding:0 0 7px;">PRODUCTOS POPULARES</p>
+                            <div id="ar-suggested-products"
+                                class="related-scroll" style="padding:0;">
+                                <div
+                                    style="text-align:center;padding:20px;color:var(--gray);">Cargando...</div>
+                            </div>
+                        </div>
+                        <div style="padding:10px 14px;"><div
+                                style="background:var(--card);border-radius:13px;padding:11px 14px;display:flex;align-items:center;gap:9px;box-shadow:0 2px 6px rgba(0,0,0,0.07);"><span>🔍</span><input
+                                    style="flex:1;border:none;background:none;font-size:13.5px;font-family:'Noto Sans',sans-serif;outline:none;"
+                                    placeholder="Buscar en catálogo..."
+                                    onclick="openSearchAndFocus()"><span
+                                    style="cursor:pointer;"
+                                    onclick="startVoiceSearch()">🎙️</span></div></div>
+                        <div style="height:14px;"></div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item active"
+                            onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('shopping')"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ MAPA ═══ -->
+                <div class="screen" id="screen-mapa">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <div class="logo" onclick="navTo('inicio')"
+                            style="cursor: pointer;">IKEA</div>
+                        <span class="header-title">Mapa</span>
+                        <div class="header-icons">
+                            <div class="cart-icon-wrap"
+                                onclick="goTo('cesta')"><div
+                                    class="header-icon">🛒</div><div
+                                    class="cart-badge"
+                                    id="cart-badge-mapa">5</div></div>
+                            <button class="header-icon"
+                                onclick="goTo('config')">⚙️</button>
+                        </div>
+                    </div>
+                    <div class="aisle-filters">
+                        <button class="aisle-btn active"
+                            onclick="setAisle(this,'todos')">Todos</button>
+                        <button class="aisle-btn"
+                            onclick="setAisle(this,'A')">Pasillo A</button>
+                        <button class="aisle-btn"
+                            onclick="setAisle(this,'B')">Pasillo B</button>
+                        <button class="aisle-btn"
+                            onclick="setAisle(this,'C')">Pasillo C</button>
+                        <button class="aisle-btn"
+                            onclick="setAisle(this,'D')">Pasillo D</button>
+                    </div>
+                    <div class="content">
+                        <div class="map-container">
+                            <div class="store-map" id="store-map-area">
+
+                                <svg id="map-route-svg"
+                                    class="map-route-svg"></svg>
+
+                                <div class="map-section"
+                                    style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:2%;top:2%;width:23%;height:24%;">Salón</div>
+                                <div class="map-section"
+                                    style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:2%;top:28%;width:23%;height:23%;">Dormitorio</div>
+                                <div class="map-section"
+                                    style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:2%;top:53%;width:23%;height:21%;">Cocina</div>
+                                <div class="map-section"
+                                    style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:2%;top:76%;width:23%;height:19%;">Oficina</div>
+
+                                <div class="map-section"
+                                    style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:26%;top:2%;width:23%;height:29%;">Almacenaje</div>
+                                <div class="map-section"
+                                    style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:26%;top:33%;width:23%;height:21%;">Iluminación</div>
+                                <div class="map-section"
+                                    style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:26%;top:56%;width:23%;height:21%;">Textiles</div>
+                                <div class="map-section"
+                                    style="background:rgba(0,88,163,0.15);border:1.5px solid rgba(0,88,163,0.4);color:var(--blue);left:26%;top:79%;width:23%;height:16%;">Baño</div>
+
+                                <div class="corridor"
+                                    style="background:rgba(150,160,170,0.15);border:1px dashed rgba(150,160,170,0.4);color:#666;left:50%;top:2%;width:11%;height:93%;">A</div>
+                                <div class="corridor"
+                                    style="background:rgba(150,160,170,0.15);border:1px dashed rgba(150,160,170,0.4);color:#666;left:62%;top:2%;width:11%;height:93%;">B</div>
+                                <div class="corridor"
+                                    style="background:rgba(150,160,170,0.15);border:1px dashed rgba(150,160,170,0.4);color:#666;left:74%;top:2%;width:11%;height:93%;">C</div>
+                                <div class="corridor"
+                                    style="background:rgba(150,160,170,0.15);border:1px dashed rgba(150,160,170,0.4);color:#666;left:86%;top:2%;width:11%;height:93%;">D</div>
+
+                                <div class="you-dot"
+                                    style="left:10%;bottom:10%;"></div>
+                                <div
+                                    style="position:absolute;left:4%;bottom:3%;font-size:9.5px;font-weight:700;color:var(--blue);">📍
+                                    Tú</div>
+                                <div
+                                    style="position:absolute;bottom:2%;left:50%;transform:translateX(-50%);font-size:9.5px;font-weight:700;color:var(--gray);">Entrada
+                                    / Caja</div>
+                            </div>
+
+                            <div class="map-legend">
+                                <div class="legend-item"><div class="legend-dot"
+                                        style="background:var(--blue);"></div>Exposición</div>
+                                <div class="legend-item"><div class="legend-dot"
+                                        style="background:rgba(150,160,170,0.15);border:1px dashed rgba(150,160,170,0.4);"></div>Autoservicio</div>
+                                <div class="legend-item"><div class="legend-dot"
+                                        style="background:var(--blue);border-radius:50%;"></div>Tu
+                                    ruta</div>
+                            </div>
+                        </div>
+                        <div style="padding:0 14px 7px;">
+                            <div
+                                style="background:var(--card);border-radius:13px;padding:9px 13px;display:flex;gap:9px;justify-content:space-around;box-shadow:0 2px 6px rgba(0,0,0,0.07);">
+                                <div style="text-align:center;"><div
+                                        style="font-size:17px;font-weight:900;color:var(--blue);"
+                                        id="route-prod-count">0</div><div
+                                        style="font-size:9.5px;color:var(--gray);">Productos</div></div>
+                                <div style="text-align:center;"><div
+                                        style="font-size:17px;font-weight:900;color:var(--green);">~<span
+                                            id="route-time">0</span>
+                                        min</div><div
+                                        style="font-size:9.5px;color:var(--gray);">Estimado</div></div>
+                                <div style="text-align:center;"><div
+                                        style="font-size:17px;font-weight:900;"
+                                        id="route-total">0,00 €</div><div
+                                        style="font-size:9.5px;color:var(--gray);">Total</div></div>
+                            </div>
+                        </div>
+                        <div id="route-list"></div>
+                        <div style="height:14px;"></div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item" onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('shopping')"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item active"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ CESTA ═══ -->
+                <div class="screen" id="screen-cesta">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <div class="logo" onclick="navTo('inicio')"
+                            style="cursor: pointer;">IKEA</div>
+                        <span class="header-title">Cesta</span>
+                        <div class="header-icons"><div
+                                class="cart-icon-wrap"><div
+                                    class="header-icon">🛒</div><div
+                                    class="cart-badge"
+                                    id="cart-badge-cesta">0</div></div></div>
+                    </div>
+                    <div class="content">
+                        <div
+                            style="background:rgba(255,219,0,0.1);border-left:4px solid var(--yellow);margin:11px 14px;padding:9px 13px;border-radius:0 9px 9px 0;font-size:11.5px;font-weight:600;">
+                            💡 <strong>Gestos:</strong>
+                            <br> 📳️ Agita para borrar último
+                            <br> ↗️ Inclina para favorito
+                        </div>
+                        <div
+                            style="display:flex;gap:7px;padding:3px 14px 9px;overflow-x:auto;">
+                            <button class="aisle-btn active"
+                                onclick="sortCart(this,'az')">A-Z</button>
+                            <button class="aisle-btn"
+                                onclick="sortCart(this,'price')">💰
+                                Precio</button>
+                            <button class="aisle-btn"
+                                onclick="sortCart(this,'weight')">⚖️
+                                Peso</button>
+                            <button class="aisle-btn"
+                                onclick="sortCart(this,'route')">📍
+                                Ruta</button>
+                            <button class="aisle-btn"
+                                onclick="startVoiceSort()">🎙 Voz</button>
+                        </div>
+                        <div id="cart-list"></div>
+                        <div
+                            style="background:var(--card);border-radius:16px;margin:0 14px 7px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+                            <div
+                                style="padding:9px 14px;display:flex;justify-content:space-between;font-size:12.5px;"><span
+                                    style="color:var(--gray);">Subtotal</span><span
+                                    id="subtotal-val"
+                                    style="font-weight:700;">0,00 €</span></div>
+                            <div
+                                style="padding:9px 14px;display:flex;justify-content:space-between;font-size:12.5px;border-top:1px solid var(--border);"><span
+                                    style="color:var(--gray);">Bolsa
+                                    IKEA</span><span id="bag-val"
+                                    style="font-weight:700;">1,00 €</span></div>
+                            <div
+                                style="padding:13px 14px;display:flex;justify-content:space-between;font-size:15px;font-weight:900;border-top:2px solid var(--border);background:rgba(0,88,163,0.04);"><span>Total</span><span
+                                    id="total-val"
+                                    style="color:var(--blue);">0,00
+                                    €</span></div>
+                        </div>
+                        <button class="pay-btn ripple-btn"
+                            onclick="goTo('pagar')">Ir a pagar →</button>
+                        <div style="height:14px;"></div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item" onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('shopping')"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item active"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ FAVORITOS ═══ -->
+                <div class="screen" id="screen-favoritos">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <div class="logo" onclick="navTo('inicio')"
+                            style="cursor: pointer;">IKEA</div>
+                        <span class="header-title">Favoritos</span>
+                        <div class="header-icons"><div class="cart-icon-wrap"
+                                onclick="goTo('cesta')"><div
+                                    class="header-icon">🛒</div><div
+                                    class="cart-badge"
+                                    id="cart-badge-fav">5</div></div></div>
+                    </div>
+                    <div class="content"><div id="fav-list"></div><div
+                            style="height:14px;"></div></div>
+                    <div class="bottom-nav">
+                        <button class="nav-item" onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('shopping')"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item active"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ SHOPPING ═══ -->
+                <div class="screen" id="screen-shopping">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <div class="logo" onclick="navTo('inicio')"
+                            style="cursor: pointer;">IKEA</div>
+                        <span class="header-title">Shopping</span>
+                        <div class="header-icons"><div class="cart-icon-wrap"
+                                onclick="goTo('cesta')"><div
+                                    class="header-icon">🛒</div><div
+                                    class="cart-badge">5</div></div></div>
+                    </div>
+                    <div class="content">
+                        <div
+                            style="padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                            <button class="action-card ripple-btn"
+                                onclick="goTo('escaner')"><span
+                                    class="action-emoji">📷</span><span
+                                    class="action-name"
+                                    style="color:var(--blue)">Escanear
+                                    QR</span><span class="action-desc">Código de
+                                    barras</span></button>
+                            <button class="action-card ripple-btn"
+                                onclick="goTo('ar')"><span
+                                    class="action-emoji">🔮</span><span
+                                    class="action-name"
+                                    style="color:var(--purple)">Vista
+                                    AR</span><span class="action-desc">Reconocer
+                                    muebles</span></button>
+                        </div>
+                        <div style="padding:0 14px 11px;"><div
+                                style="background:var(--card);border-radius:13px;padding:11px 14px;display:flex;align-items:center;gap:9px;box-shadow:0 2px 6px rgba(0,0,0,0.07);"><span>🔍</span><input
+                                    style="flex:1;border:none;background:none;font-size:13.5px;font-family:'Noto Sans',sans-serif;outline:none;"
+                                    placeholder="Buscar en catálogo IKEA..."
+                                    onclick="openSearchAndFocus()"><span
+                                    style="cursor:pointer;"
+                                    onclick="startVoiceSearch()">🎙️</span></div></div>
+                        <div class="section-title">TODOS LOS PRODUCTOS</div>
+                        <div id="shopping-list"></div>
+                        <div style="height:14px;"></div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item" onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item active"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ PRODUCTO DETALLE ═══ -->
+                <div class="screen" id="screen-producto">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <button class="header-icon"
+                            onclick="goBack()">←</button>
+                        <span class="header-title"
+                            id="prod-header-title">Producto</span>
+                        <div class="header-icons">
+                            <button class="header-icon" id="prod-fav-btn"
+                                onclick="toggleProductFav()">☆</button>
+                            <div class="cart-icon-wrap"
+                                onclick="goTo('cesta')"><div
+                                    class="header-icon">🛒</div><div
+                                    class="cart-badge">5</div></div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="producto-hero">
+                            <div class="producto-hero-emoji"
+                                id="prod-hero-emoji">📦</div>
+                            <img id="prod-hero-image" src alt="Producto"
+                                style="display:none;width:100%;height:180px;object-fit:contain;border-radius:20px;background:#f0f0f0;">
+                            <div class="producto-badge"
+                                id="prod-badge">NUEVO</div>
+                        </div>
+                        <div class="producto-body">
+                            <div class="producto-name-row">
+                                <div>
+                                    <div class="producto-name"
+                                        id="prod-name">-</div>
+                                    <div class="producto-desc"
+                                        id="prod-desc">-</div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <div class="producto-price"
+                                        id="prod-price">- €</div>
+                                    <div class="producto-price-sub">IVA
+                                        incluido</div>
+                                </div>
+                            </div>
+                            <div class="info-pills" id="prod-pills">
+                                <!-- Filled by JS -->
+                            </div>
+                            <div class="producto-actions" id="prod-actions">
+                                <button class="btn btn-primary" style="flex:1;"
+                                    onclick="addProductToCart()">+ Añadir a la
+                                    cesta</button>
+                            </div>
+                            <div class="related-title">TAMBIÉN TE PUEDE
+                                GUSTAR</div>
+                            <div class="related-scroll" id="prod-related">
+                                <!-- Filled by JS -->
+                            </div>
+                            <div style="margin-top:14px;">
+                                <div class="related-title">DESCRIPCIÓN</div>
+                                <p id="prod-long-desc"
+                                    style="font-size:12.5px;color:var(--gray);line-height:1.6;background:var(--card);border-radius:13px;padding:13px;box-shadow:0 2px 6px rgba(0,0,0,0.07);"></p>
+                            </div>
+                        </div>
+                        <div style="height:20px;"></div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item" onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item active"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ PAGAR ═══ -->
+                <div class="screen" id="screen-pagar">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <button class="header-icon"
+                            onclick="goBack()">←</button>
+                        <span class="header-title">Pagar</span>
+                        <div class="header-icons"><div
+                                class="cart-icon-wrap"><div
+                                    class="header-icon">🛒</div><div
+                                    class="cart-badge">5</div></div></div>
+                    </div>
+                    <div class="content">
+                        <div class="pay-summary">
+                            <div class="pay-header">RESUMEN DEL PEDIDO</div>
+                            <div id="pay-summary-list"></div>
+                            <div class="pay-total-row"><span
+                                    style="color:var(--gray)">Subtotal</span><span
+                                    id="pay-subtotal">0,00 €</span></div>
+                            <div class="pay-total-row"><span
+                                    style="color:var(--gray)">Bolsa
+                                    IKEA</span><span id="pay-bag">1,00
+                                    €</span></div>
+                            <div
+                                class="pay-total-row final"><span>Total</span><span
+                                    style="color:var(--blue)"
+                                    id="pay-total">0,00 €</span></div>
+                        </div>
+                        <div class="section-title">MÉTODO DE PAGO</div>
+                        <div class="payment-option selected"
+                            onclick="selectPayment(this)">
+                            <div class="payment-icon">💳</div>
+                            <div class="payment-info"><div
+                                    class="payment-name">Tarjeta de
+                                    crédito</div><div
+                                    class="payment-detail">**** **** ****
+                                    4242</div></div>
+                            <div class="radio-dot"></div>
+                        </div>
+                        <div class="payment-option"
+                            onclick="selectPayment(this)">
+                            <div class="payment-icon">🏧</div>
+                            <div class="payment-info"><div
+                                    class="payment-name">Tarjeta de
+                                    débito</div><div class="payment-detail">****
+                                    **** **** 8080</div></div>
+                            <div class="radio-dot"></div>
+                        </div>
+                        <div class="payment-option"
+                            onclick="selectPayment(this)">
+                            <div class="payment-icon">📱</div>
+                            <div class="payment-info"><div
+                                    class="payment-name">Apple Pay / Google
+                                    Pay</div><div class="payment-detail">Pago
+                                    rápido con huella</div></div>
+                            <div class="radio-dot"></div>
+                        </div>
+                        <button class="pay-btn ripple-btn" id="pay-confirm-btn"
+                            onclick="confirmPayment()">Confirmar y pagar · 0,00
+                            €</button>
+                        <div style="height:14px;"></div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item" onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item active"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ HISTORIAL ═══ -->
+                <div class="screen" id="screen-historial">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <button class="header-icon"
+                            onclick="goBack()">←</button>
+                        <span class="header-title">Historial</span>
+                        <div class="header-icons"><div class="cart-icon-wrap"
+                                onclick="goTo('cesta')"><div
+                                    class="header-icon">🛒</div><div
+                                    class="cart-badge"
+                                    id="hist-cart-badge">0</div></div></div>
+                    </div>
+                    <div class="content">
+                        <div
+                            style="background:linear-gradient(135deg,var(--blue),var(--blue-dark));margin:10px 14px;border-radius:20px;padding:14px;color:white;">
+                            <div
+                                style="font-size:9px;letter-spacing:1.5px;font-weight:900;opacity:0.7;margin-bottom:10px;">RESUMEN
+                                DE COMPRAS</div>
+                            <div
+                                style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;">
+                                <div
+                                    style="background:rgba(255,255,255,0.1);border-radius:13px;padding:11px 7px;text-align:center;"><span
+                                        style="font-size:20px;">🏬</span><div
+                                        style="font-size:19px;font-weight:900;margin-top:3px;"
+                                        id="hist-visits">0</div><div
+                                        style="font-size:8.5px;opacity:0.7;">Visitas</div></div>
+                                <div
+                                    style="background:rgba(255,255,255,0.1);border-radius:13px;padding:11px 7px;text-align:center;"><span
+                                        style="font-size:20px;">📦</span><div
+                                        style="font-size:19px;font-weight:900;margin-top:3px;"
+                                        id="hist-items">0</div><div
+                                        style="font-size:8.5px;opacity:0.7;">Artículos</div></div>
+                                <div
+                                    style="background:rgba(255,255,255,0.1);border-radius:13px;padding:11px 7px;text-align:center;"><span
+                                        style="font-size:20px;">💰</span><div
+                                        style="font-size:19px;font-weight:900;margin-top:3px;"
+                                        id="hist-spent">0€</div><div
+                                        style="font-size:8.5px;opacity:0.7;">Gastado</div></div>
+                            </div>
+                        </div>
+                        <div class="section-title">PEDIDOS ANTERIORES</div>
+                        <div id="hist-orders-list">
+                            <div
+                                style="text-align:center;padding:40px;color:var(--gray);"><div
+                                    style="font-size:48px;margin-bottom:12px;">📋</div><div
+                                    style="font-weight:700;">Sin pedidos
+                                    todavía</div><div
+                                    style="font-size:12px;margin-top:4px;">Tus
+                                    compras aparecerán aquí</div></div>
+                        </div>
+                        <div style="height:14px;"></div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item" onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item active"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ CONFIG ═══ -->
+                <div class="screen" id="screen-config">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <div class="logo" onclick="navTo('inicio')"
+                            style="cursor: pointer;">IKEA</div>
+                        <span class="header-title">Configuración</span>
+                        <div class="header-icons"><div class="cart-icon-wrap"
+                                onclick="goTo('cesta')"><div
+                                    class="header-icon">🛒</div><div
+                                    class="cart-badge">5</div></div></div>
+                    </div>
+                    <div class="content">
+                        <div class="profile-card" onclick="goTo('perfil')">
+                            <div class="profile-avatar">👤</div>
+                            <div style="flex:1;">
+                                <div class="profile-name" id="cfg-name">Nombre
+                                    Usuario</div>
+                                <div class="profile-email"
+                                    id="cfg-email">usuario@ikea.es</div>
+                                <div class="profile-badge">⭐ IKEA Family</div>
+                            </div>
+                            <span class="profile-chevron">›</span>
+                        </div>
+                        <div style="padding:3px 14px 14px;">
+                            <div class="settings-title">PREFERENCIAS DE LA
+                                APP</div>
+                            <div class="settings-card">
+                                <div class="settings-item">
+                                    <div class="settings-emoji">🌐</div>
+                                    <div class="settings-info"><div
+                                            class="settings-name">Idioma</div></div>
+                                    <select
+                                        style="border:1px solid var(--border);border-radius:7px;padding:4px 7px;font-size:11.5px;background:var(--bg);">
+                                        <option>Español</option><option>English</option><option>Français</option>
+                                    </select>
+                                </div>
+                                <div class="settings-item">
+                                    <div class="settings-emoji">📏</div>
+                                    <div class="settings-info"><div
+                                            class="settings-name">Medidas</div></div>
+                                    <select
+                                        style="border:1px solid var(--border);border-radius:7px;padding:4px 7px;font-size:11.5px;background:var(--bg);">
+                                        <option>kg / cm</option><option>lb /
+                                            in</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding:0 14px 14px;">
+                            <div class="settings-title">NOTIFICACIONES</div>
+                            <div class="settings-card">
+                                <div class="settings-item"><div
+                                        class="settings-emoji">📦</div><div
+                                        class="settings-info"><div
+                                            class="settings-name">Alertas de
+                                            stock</div><div
+                                            class="settings-desc">Avisa si un
+                                            artículo se agota</div></div><button
+                                        class="toggle on"
+                                        onclick="this.classList.toggle('on')"></button></div>
+                                <div class="settings-item"><div
+                                        class="settings-emoji">🏷️</div><div
+                                        class="settings-info"><div
+                                            class="settings-name">Alertas de
+                                            ofertas</div><div
+                                            class="settings-desc">Artículos de
+                                            tu lista en
+                                            oferta</div></div><button
+                                        class="toggle"
+                                        onclick="this.classList.toggle('on')"></button></div>
+                                <div class="settings-item"><div
+                                        class="settings-emoji">🗺️</div><div
+                                        class="settings-info"><div
+                                            class="settings-name">Guía de
+                                            ruta</div><div
+                                            class="settings-desc">Navegación
+                                            paso a paso</div></div><button
+                                        class="toggle on"
+                                        onclick="this.classList.toggle('on')"></button></div>
+                            </div>
+                        </div>
+                        <div style="padding:0 14px 14px;">
+                            <div class="settings-title">GESTOS E
+                                INTERACCIONES</div>
+                            <div class="settings-card">
+                                <div class="settings-item"><div
+                                        class="settings-emoji">🎙️</div><div
+                                        class="settings-info"><div
+                                            class="settings-name">Comandos de
+                                            voz</div></div><button
+                                        class="toggle on"
+                                        onclick="this.classList.toggle('on')"></button></div>
+                                <div class="settings-item"><div
+                                        class="settings-emoji">↗️</div><div
+                                        class="settings-info"><div
+                                            class="settings-name">Inclinar para
+                                            favoritos</div></div><button
+                                        class="toggle on"
+                                        onclick="this.classList.toggle('on')"></button></div>
+                                <div class="settings-item"><div
+                                        class="settings-emoji">📳️</div><div
+                                        class="settings-info"><div
+                                            class="settings-name">Agitar para
+                                            borrar</div></div><button
+                                        class="toggle on"
+                                        onclick="this.classList.toggle('on')"></button></div>
+                            </div>
+                        </div>
+                        <div style="padding:0 14px 14px;">
+                            <div class="settings-title">CUENTA</div>
+                            <div class="settings-card">
+                                <div class="settings-item"
+                                    onclick="goTo('perfil')"><div
+                                        class="settings-emoji">👤</div><div
+                                        class="settings-info"><div
+                                            class="settings-name">Gestionar
+                                            perfil</div><div
+                                            class="settings-desc">Ver y editar
+                                            datos personales</div></div><span
+                                        style="color:var(--gray);">›</span></div>
+                                <div class="settings-item"
+                                    onclick="goTo('historial')"><div
+                                        class="settings-emoji">🧾</div><div
+                                        class="settings-info"><div
+                                            class="settings-name">Historial de
+                                            compras</div></div><span
+                                        style="color:var(--gray);">›</span></div>
+                            </div>
+                        </div>
+                        <button class="pay-btn danger"
+                            onclick="goTo('login')">Cerrar sesión</button>
+                        <div style="height:14px;"></div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item" onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('shopping')"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ PERFIL ═══ -->
+                <div class="screen" id="screen-perfil">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="header">
+                        <button class="header-icon"
+                            onclick="goBack()">←</button>
+                        <span class="header-title">Mi Perfil</span>
+                        <div class="header-icons"><button class="header-icon"
+                                onclick="openEditSheet()">✏️</button></div>
+                    </div>
+                    <div class="content">
+                        <div class="perfil-hero">
+                            <div class="perfil-avatar-wrap">
+                                <div class="perfil-avatar-big"
+                                    onclick="showToast('📸 Toca para cambiar foto')">👤</div>
+                                <div class="perfil-avatar-edit"
+                                    onclick="showToast('📸 Cambiar foto')">📷</div>
+                            </div>
+                            <div class="perfil-name"
+                                id="perfil-name-display">Nombre Usuario</div>
+                            <div class="perfil-email"
+                                id="perfil-email-display">usuario@ikea.es</div>
+                            <div class="perfil-badge">⭐ IKEA Family · Miembro
+                                desde 2021</div>
+                        </div>
+                        <div class="perfil-stats">
+                            <div class="perfil-stat-card"><span
+                                    class="perfil-stat-emoji">🏬</span><div
+                                    class="perfil-stat-val">0</div><div
+                                    class="perfil-stat-lbl">VISITAS</div></div>
+                            <div class="perfil-stat-card"><span
+                                    class="perfil-stat-emoji">⭐</span><div
+                                    class="perfil-stat-val"
+                                    id="perfil-points">0</div><div
+                                    class="perfil-stat-lbl">PUNTOS</div></div>
+                            <div class="perfil-stat-card"><span
+                                    class="perfil-stat-emoji">💳</span><div
+                                    class="perfil-stat-val">0 €</div><div
+                                    class="perfil-stat-lbl">AHORRADO</div></div>
+                        </div>
+                        <div class="family-card">
+                            <div class="family-logo-row">
+                                <div class="family-logo">IKEA</div>
+                                <div class="family-brand">FAMILY CARD</div>
+                            </div>
+                            <div class="family-card-number">•••• •••• ••••
+                                7890</div>
+                            <div class="family-bottom">
+                                <div>
+                                    <div class="family-name"
+                                        id="family-name-display">Nombre
+                                        Usuario</div>
+                                    <div class="family-level">🥈 Nivel
+                                        Plata</div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <div class="family-points-val"
+                                        id="family-points-display">4.830</div>
+                                    <div class="family-points-lbl">PUNTOS</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="perfil-section">
+                            <div class="perfil-section-title">DATOS
+                                PERSONALES</div>
+                            <div class="perfil-card">
+                                <div class="perfil-field"
+                                    onclick="openEditSheet('name')"><div
+                                        class="perfil-field-icon">👤</div><div
+                                        class="perfil-field-info"><div
+                                            class="perfil-field-label">NOMBRE</div><div
+                                            class="perfil-field-val"
+                                            id="pf-name">Nombre
+                                            Usuario</div></div><span
+                                        style="color:var(--gray);">›</span></div>
+                                <div class="perfil-field"
+                                    onclick="openEditSheet('email')"><div
+                                        class="perfil-field-icon">✉️</div><div
+                                        class="perfil-field-info"><div
+                                            class="perfil-field-label">CORREO</div><div
+                                            class="perfil-field-val"
+                                            id="pf-email">usuario@ikea.es</div></div><span
+                                        style="color:var(--gray);">›</span></div>
+                                <div class="perfil-field"
+                                    onclick="openEditSheet('phone')"><div
+                                        class="perfil-field-icon">📱</div><div
+                                        class="perfil-field-info"><div
+                                            class="perfil-field-label">TELÉFONO</div><div
+                                            class="perfil-field-val"
+                                            id="pf-phone">+34 600 000
+                                            000</div></div><span
+                                        style="color:var(--gray);">›</span></div>
+                                <div class="perfil-field"
+                                    onclick="openEditSheet('bday')"><div
+                                        class="perfil-field-icon">🎂</div><div
+                                        class="perfil-field-info"><div
+                                            class="perfil-field-label">FECHA DE
+                                            NACIMIENTO</div><div
+                                            class="perfil-field-val"
+                                            id="pf-bday">15 / 03 /
+                                            1990</div></div><span
+                                        style="color:var(--gray);">›</span></div>
+                            </div>
+                        </div>
+                        <div class="perfil-section">
+                            <div class="perfil-section-title">ACTIVIDAD</div>
+                            <div class="perfil-card" id="activity-card">
+                                <div class="perfil-field"
+                                    onclick="goTo('historial')"><div
+                                        class="perfil-field-icon">🧾</div><div
+                                        class="perfil-field-info"><div
+                                            class="perfil-field-label">HISTORIAL</div><div
+                                            class="perfil-field-val">Ver mis
+                                            compras anteriores</div></div><span
+                                        style="color:var(--gray);">›</span></div>
+                                <div class="perfil-field"
+                                    onclick="navTo('favoritos')"><div
+                                        class="perfil-field-icon">⭐</div><div
+                                        class="perfil-field-info"><div
+                                            class="perfil-field-label">FAVORITOS</div><div
+                                            class="perfil-field-val">Sin
+                                            artículos guardados</div></div><span
+                                        style="color:var(--gray);">›</span></div>
+                            </div>
+                        </div>
+                        <button class="pay-btn danger"
+                            onclick="goTo('login')">🗑️ Eliminar cuenta</button>
+                        <div style="height:14px;"></div>
+                    </div>
+                    <!-- Edit Sheet overlay -->
+                    <div class="edit-overlay" id="edit-overlay"
+                        onclick="closeEditSheetOnBg(event)">
+                        <div class="edit-sheet" id="edit-sheet">
+                            <div class="edit-sheet-handle"></div>
+                            <div class="edit-sheet-title"
+                                id="edit-sheet-title">Editar perfil</div>
+                            <div
+                                id="edit-sheet-body"><!-- filled by JS --></div>
+                            <div class="edit-sheet-actions">
+                                <button class="btn btn-ghost"
+                                    onclick="closeEditSheet()">Cancelar</button>
+                                <button class="btn btn-primary"
+                                    onclick="saveEditSheet()">Guardar
+                                    cambios</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-nav">
+                        <button class="nav-item" onclick="navTo('inicio')"><span
+                                class="nav-emoji">🏠</span><span
+                                class="nav-label">Inicio</span></button>
+                        <button class="nav-item active"><span
+                                class="nav-emoji">🛍️</span><span
+                                class="nav-label">Shopping</span></button>
+                        <button class="nav-item" onclick="navTo('cesta')"><span
+                                class="nav-emoji">🛒</span><span
+                                class="nav-label">Cesta</span></button>
+                        <button class="nav-item"
+                            onclick="navTo('favoritos')"><span
+                                class="nav-emoji">⭐</span><span
+                                class="nav-label">Favoritos</span></button>
+                        <button class="nav-item" onclick="navTo('mapa')"><span
+                                class="nav-emoji">🗺️</span><span
+                                class="nav-label">Mapa</span></button>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════ SUCCESS ═══ -->
+                <div class="screen" id="screen-success">
+                    <div class="status-bar"><span
+                            class="status-time">12:00</span><div
+                            class="status-icons">📶 🔋</div></div>
+                    <div class="success-screen">
+                        <div class="success-icon">✅</div>
+                        <div class="success-title">¡Pago Completado!</div>
+                        <div class="success-subtitle">Tu pedido ha sido
+                            procesado correctamente. Dirígete a caja para
+                            recoger tus artículos.</div>
+                        <div
+                            style="background:rgba(31,132,35,0.08);border:1px solid rgba(31,132,35,0.2);border-radius:14px;padding:14px 18px;width:100%;text-align:center;">
+                            <div
+                                style="font-size:10px;letter-spacing:1.5px;font-weight:900;color:var(--gray);margin-bottom:3px;">NÚMERO
+                                DE PEDIDO</div>
+                            <div
+                                style="font-size:22px;font-weight:900;color:var(--green);"
+                                id="success-order-id">#IK-0000</div>
+                        </div>
+                        <div style="font-size:12.5px;color:var(--gray);"
+                            id="success-order-summary">0,00 € · 0 artículos ·
+                            IKEA Bilbao</div>
+                        <button class="pay-btn ripple-btn"
+                            onclick="clearCart();goTo('inicio');renderHistorial();renderProfile();"
+                            style="width:100%;">Volver al inicio 🏠</button>
+                    </div>
+                </div>
+
+            </div><!-- /screens -->
+            <div class="toast" id="toast"></div>
+        </div><!-- /phone -->
+        <script src="../static/app.js"></script>
+    </body>
+</html>
