@@ -33,6 +33,42 @@ Para el reconocimiento de muebles en tiempo real en entornos no controlados (fot
 
 ---
 
+## 🤖 Motor de Reconocimiento por IA: Google Gemini + Fallback Local
+
+El reconocimiento de muebles se apoya en una **arquitectura híbrida de dos motores** que garantiza la disponibilidad del servicio incluso si la API externa falla:
+
+### 1. Motor Principal: Google Gemini (Visión + Búsqueda Web)
+* **Modelo:** `gemini-3.5-flash-lite`, configurable mediante la variable de entorno `GEMINI_MODEL_NAME`.
+* **Búsqueda web activada (Search Grounding):** el modelo analiza la foto y consulta la web oficial de IKEA para localizar el producto exacto. La herramienta se declara con los **tipos oficiales del SDK `google-genai`** (corrigiendo la sintaxis anterior basada en diccionarios crudos):
+  ```python
+  from google.genai import types
+  tools=[types.Tool(google_search=types.GoogleSearch())]
+  ```
+* **Formato JSON estricto:** la respuesta debe ser un único objeto JSON con el mismo contrato de 10 campos que espera el frontend (`id`, `confidence`, `confidence_pct`, `nombre`, `subtitulo`, `precio`, `imagen`, `url`, `peso`, `ubicacion`). La restricción de formato se impone únicamente mediante el *system prompt* y se normaliza con `_extract_json`, que tolera bloques Markdown y texto sobrante.
+* **Autenticación:** API key leída de la variable de entorno `GEMINI_API_KEY` (librería `google-genai` añadida a `requirements.txt`).
+
+### 2. Estrategia de Resiliencia (Fallback Automático)
+El endpoint `/identify` ejecuta un flujo defensivo de dos intentos antes de recurrir al pipeline local:
+
+| Intento | Herramienta | Cuándo se ejecuta |
+|---|---|---|
+| **1º** | `google_search` (Search Grounding) | Siempre, como intento principal |
+| **2º** | `tools=None` (visión nativa) | Si el 1º falla con **429 `RESOURCE_EXHAUSTED`** (cuota de búsqueda web agotada), timeout, error HTTP o JSON inválido |
+| **Fallback** | Pipeline local (YOLO-World + OpenCLIP + FAISS) | Si ambos intentos fallan o devuelven JSON inválido |
+
+* Cada fallo se registra con `logger.warning` detallando la causa (código HTTP, cuota, timeout...).
+* La respuesta JSON al cliente es **indistinguible** sin importar qué motor la generó: siempre los mismos 10 campos por producto.
+* Si `GEMINI_API_KEY` no está configurada, la aplicación arranca igualmente y deriva todo el tráfico al pipeline local de forma transparente.
+
+### 3. Configuración (Variables de Entorno)
+
+| Variable | Descripción | Valor por defecto |
+|---|---|---|
+| `GEMINI_API_KEY` | Clave de la API oficial de Google Gemini | *(vacío → fallback local)* |
+| `GEMINI_MODEL_NAME` | Nombre del modelo de visión | `gemini-3.5-flash-lite` |
+
+---
+
 ## 📱 Probar la Aplicación en Vivo
 
 Actualmente ofrecemos dos formas de probar la aplicación en vivo, asegurando la conexión HTTPS necesaria para que los sensores del móvil (cámara, giroscopio, micrófono) funcionen correctamente:

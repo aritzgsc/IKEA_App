@@ -9,3 +9,4 @@ ultralytics
 Pillow
 numpy
 jinja2
+google-genai
